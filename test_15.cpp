@@ -1,69 +1,85 @@
 
 
+
+
 #include<iostream>
 
 using namespace std;
 
-
-
-#define MAX 100
-typedef struct
+void SXH_num1()
 {
-    int data;
-    char key;
-}Data_type;
-
-typedef struct
-{
-    Data_type A[MAX + 1];
-    int length;
-}SqList;
-
-
-
-
-//冒泡排序
-
-SqList BubbleSort(SqList L)
-{
-    int i = 0;
-    int j = 0;
-    for (i = 0; i < L.length - 1; i++)//走length-1趟
+    for (int i = 1; i < 10; i++)
     {
-        for (j = 0; j < L.length - 1 - i; j++)//比较length-1-i次(i=0,1,2...length-2)
+        for (int j = 0; j < 10; j++)
         {
-            if (L.A[j].data > L.A[j + 1].data)
+            for (int k = 0; k < 10; k++)
             {
-                Data_type temp = L.A[j + 1];
-                L.A[j + 1] = L.A[j];
-                L.A[j] = temp;
+                if (i * 100 + j * 10 + k == i * i * i + j * j * j + k * k * k)
+                {
+                    cout << i * 100 + j * 10 + k << " ";
+                }
             }
         }
     }
-    return L;
 }
 
-void Show_List(SqList L)
+void SXH_num2()
 {
-    for (int i = 0; i < L.length; i++)
+    int num = 0;
+    cout << "请输入一个1000以内的数字：" << endl;
+    cin >> num;
+    int a = num / 100;
+    int temp = num % 100;
+    int b = temp / 10;
+    int c = temp % 10;
+    if (a * a * a + b * b * b + c * c * c == num)
     {
-        cout << L.A[i].data << " ";
+        cout << num << "是水仙花数\n";
+    }
+    else
+    {
+        cout << num << "不是水仙花数\n";
     }
 }
 
-int main()
+#include<stdio.h>
+void hanoi_move(int n, int A, int B, int C)
 {
-    SqList L = { 0 };
-    L.length = 10;
-    for (int i = 0; i < L.length; i++)
+    if (1 == n)
     {
-        L.A[i].data = L.length - i;
+        printf("%d-->%d\t", A, C);
     }
-    cout << "排序前：";
-    Show_List(L);
-    cout << endl;
-    L = BubbleSort(L);
-    cout << "排序后：";
-    Show_List(L);
+    else
+    {
+        hanoi_move(n - 1, A, C, B);//将n-1个圆盘从A移动到B
+        printf("%d-->%d\t", A, C);//将第n个圆盘从A柱移动到C柱
+        hanoi_move(n - 1, B, A, C);//将n-1个圆盘从B柱移动到C柱
+    }
+}
+
+
+
+//实验课程序
+//int main()
+//{
+//    int n = 10;
+//    hanoi_move(n, 'A', 'B', 'C');
+//    //水仙花数
+//    //SXH_num1();
+//    //SXH_num2();
+//    return 0;
+//}
+
+int main() {
+    int h=10;
+    char flag='y';
+    while (tolower(flag) != 'n') {
+        cout << "汉诺塔问题" << endl << "Please input the number of the diskes: ";
+        cin >> h;
+        cout << "The steps to moving " << h << " diskes are as follows:" << endl;
+        hanoi_move(h, 1, 2, 3);
+        cout << endl << "Do you want to go on?(y for yes, n for no) ";
+        cin >> flag;
+    }
     return 0;
 }
